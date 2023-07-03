@@ -3,13 +3,16 @@ import { Form } from '@remix-run/react'
 import { IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 
-const AddNewCityInput = ({ setIsAddingNewCity }) => {
-	const onSubmit = () => {
-		console.log('hello')
-	}
+type TAddNewCityInput = {
+	isDisabled: boolean
+}
 
+const AddNewCityInput = ({ isDisabled }: TAddNewCityInput) => {
 	return (
-		<Form method="post">
+		<Form
+			method="post"
+			style={{ width: '15rem', margin: 'auto' }}
+		>
 			<input
 				placeholder="City"
 				id="city"
@@ -21,16 +24,16 @@ const AddNewCityInput = ({ setIsAddingNewCity }) => {
 				className="button"
 				name="action"
 				value="post"
-				onClick={onSubmit}
+				disabled={isDisabled}
 			>
-				<b>Submit</b>
+				<b>Add City</b>
 			</button>
 		</Form>
 	)
 }
 
-const CityItem = ({ name }: { name: string }) => (
-	<>
+const CityItem = ({ name, cityId }: { name: string; cityId: string }) => {
+	return (
 		<h4 className="cityLabel">
 			{name}
 			<Form
@@ -40,7 +43,7 @@ const CityItem = ({ name }: { name: string }) => (
 				<input
 					type="hidden"
 					name="city"
-					value={name}
+					value={cityId}
 				/>
 				<IconButton
 					sx={{ marginLeft: '.5rem' }}
@@ -52,38 +55,31 @@ const CityItem = ({ name }: { name: string }) => (
 				</IconButton>
 			</Form>
 		</h4>
-	</>
-)
+	)
+}
 
-const FavouriteCities = ({ cities }: { cities: Array<{ name: string }> }) => {
-	const [isAddingNewCity, setIsAddingNewCity] = useState(false)
-
+const FavouriteCities = ({
+	cities,
+}: {
+	cities: Array<{ name: string; cityId: string }>
+}) => {
 	return (
 		<div className="faveCityContainer">
 			<div className="header">
 				<h2 className="title">Favourite Cities</h2>
-				<button
-					onClick={() => setIsAddingNewCity(!isAddingNewCity)}
-					className="button"
-					disabled={cities.length === 5}
-				>
-					{isAddingNewCity ? <b>Return</b> : <b>Add City</b>}
-				</button>
 			</div>
 			<div className="content">
+				<AddNewCityInput isDisabled={cities.length === 5} />
 				{cities.length === 0 ? (
 					<h4 style={{ textAlign: 'center' }}>There are no cities</h4>
 				) : (
-					cities.map((city: { name: string }, idx: number) => (
+					cities.map((city) => (
 						<CityItem
-							name={city.name}
-							key={idx}
+							{...city}
+							key={city.cityId}
 						/>
 					))
 				)}
-				{isAddingNewCity ? (
-					<AddNewCityInput setIsAddingNewCity={setIsAddingNewCity} />
-				) : null}
 			</div>
 		</div>
 	)

@@ -5,12 +5,11 @@ import { LoaderArgs, json, ActionArgs } from '@remix-run/node'
 import { getUserId } from 'session'
 import { redirect } from '@remix-run/node'
 import Logout from 'components/Logout'
-import { getIconString } from 'utils/getIcon'
 import { prisma } from 'db.server'
 import WeatherCardContainer from 'components/WeatherCardContainer'
 import 'styles/home.css'
 
-type WeatherResponse = {
+export type WeatherResponse = {
 	current: {
 		condition: { text: string; code: number }
 		temp_c: number
@@ -23,12 +22,10 @@ type WeatherResponse = {
 export const action = async ({ request }: ActionArgs) => {
 	const formData = await request.formData()
 	const city = formData.get('city')
-
-	const data = { name: city }
 	if (city === '') return redirect('/home')
 	formData.get('action') === 'post'
-		? await prisma.faveCity.create({ data })
-		: await prisma.faveCity.deleteMany({ where: data })
+		? await prisma.faveCity.create({ data: { name: city } })
+		: await prisma.faveCity.delete({ where: { cityId: city } })
 	return redirect('/home')
 }
 
@@ -38,11 +35,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 	if (!userId) return redirect('/login')
 
 	// Now they are logged in, we can load the page data
-	const cities = await prisma.faveCity.findMany({
-		select: {
-			name: true,
-		},
-	})
+	const cities = await prisma.faveCity.findMany()
 	const weatherData: WeatherResponse[] = await Promise.all(
 		cities.map(
 			async (city) => await getApiResponse<string, WeatherResponse>(city.name)

@@ -1,21 +1,26 @@
 import { getIconString } from 'utils/getIcon'
+import { WeatherResponse } from 'routes/home'
 import 'styles/home.css'
 
-const WeatherCardContainer = ({ weatherData }) => {
+type TWeatherCardContainer = {
+	weatherData: WeatherResponse[]
+}
+
+const WeatherCardContainer = ({ weatherData }: TWeatherCardContainer) => {
 	return (
 		<div className="weatherCardContainer">
-			{weatherData.map((city, idx) => (
+			{weatherData.map((city: WeatherResponse, idx: number) => (
 				<div
 					key={idx}
 					className="weatherCard"
 				>
-					<h4 style={{ display: 'block' }}>{city.location.name}</h4>
+					<h4>{city.location.name}</h4>
 					<img
 						src={getIconString(city.current.condition.code)}
 						alt="weatherLogo"
 						style={{ display: 'inline-block' }}
 					/>
-					<p>{city.current.condition.text}</p>
+					<b style={{ display: 'block' }}>{city.current.condition.text}</b>
 					<p>
 						Temp. (ºC): <b>{city.current.temp_c}</b>
 					</p>
