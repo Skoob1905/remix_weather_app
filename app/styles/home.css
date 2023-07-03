@@ -26,6 +26,13 @@ h4 {
     margin: 0 1rem;
 }
 
+.error {
+    color: red;
+    text-align: center;
+    font-size: small;
+    margin: 0;
+}
+
 .weatherCardContainer {
     display: flex;
     overflow-x: scroll;
@@ -41,6 +48,7 @@ h4 {
     border: 1px solid lightgray;
     border-radius: 15px;
     background-color: #8DCBE6;
+    padding: 1rem;
 }
 
 .login {

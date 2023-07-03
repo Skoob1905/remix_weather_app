@@ -22,6 +22,8 @@ export type WeatherResponse = {
 export const action = async ({ request }: ActionArgs) => {
 	const formData = await request.formData()
 	const city = formData.get('city')
+	if (await prisma.faveCity.findFirst({ where: { name: city } }))
+		return json({ status: 400 })
 	if (city === '') return redirect('/home')
 	formData.get('action') === 'post'
 		? await prisma.faveCity.create({ data: { name: city } })

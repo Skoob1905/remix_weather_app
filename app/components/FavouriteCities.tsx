@@ -1,33 +1,34 @@
-import { useState } from 'react'
-import { Form } from '@remix-run/react'
+import { Form, useActionData } from '@remix-run/react'
 import { IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
+import Button from './Button'
 
 type TAddNewCityInput = {
 	isDisabled: boolean
 }
 
 const AddNewCityInput = ({ isDisabled }: TAddNewCityInput) => {
+	const actionData = useActionData()
 	return (
 		<Form
 			method="post"
 			style={{ width: '15rem', margin: 'auto' }}
 		>
+			{actionData?.status ? <p className="error">City already added</p> : null}
 			<input
 				placeholder="City"
 				id="city"
 				name="city"
 				className="input"
 			/>
-			<button
+			<Button
+				label="Add City"
 				type="submit"
 				className="button"
 				name="action"
 				value="post"
 				disabled={isDisabled}
-			>
-				<b>Add City</b>
-			</button>
+			/>
 		</Form>
 	)
 }
@@ -65,9 +66,7 @@ const FavouriteCities = ({
 }) => {
 	return (
 		<div className="faveCityContainer">
-			<div className="header">
-				<h2 className="title">Favourite Cities</h2>
-			</div>
+			<h2 className="title">Favourite Cities</h2>
 			<div className="content">
 				<AddNewCityInput isDisabled={cities.length === 5} />
 				{cities.length === 0 ? (
