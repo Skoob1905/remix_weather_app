@@ -1,0 +1,70 @@
+.login {
+    width: 330px;
+    height: 323px;
+    margin: 5rem auto 0 auto;
+    justify-content: center;
+    background-color: #8DCBE6;
+    opacity: 0.6;
+    border-radius: 10px;
+}
+
+.button {
+    height: 2rem;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #8DCBE6;
+}
+
+.logout {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+}
+
+.faveCity {
+    width: 90%;
+    max-width: 20rem;
+    border-radius: 10px;
+    margin: auto;
+    padding: 1rem;
+}
+
+.cityList {
+    border:1px solid rgba(0,0, 0, 0.6);
+    border-radius: 10px;
+}
+
+.city {
+    padding-left: 1rem;
+}
+
+.input{
+    height: 38px;
+    width: 100px;
+    margin: -0.5rem .5rem .5rem .5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    padding-left: 1rem;
+}
+
+
+
+.faveCityHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carousel {
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    overflow-x: scroll;
+    padding: 1rem
+}
+
+.carouselElement {  
+    width: 10rem;
+    align-items: center;
+}

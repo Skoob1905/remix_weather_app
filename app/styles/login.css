@@ -1,0 +1,9 @@
+.login {
+    width: 330px;
+    height: 323px;
+    margin: 5rem auto;
+    justify-content: center;
+    background-color: #8DCBE6;
+    opacity: 0.6;
+    border-radius: 10px;
+}
