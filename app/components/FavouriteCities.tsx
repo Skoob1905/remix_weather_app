@@ -33,7 +33,10 @@ const CityItem = ({ name }: { name: string }) => (
 	<>
 		<h4 className="cityLabel">
 			{name}
-			<Form method="delete">
+			<Form
+				method="delete"
+				style={{ display: 'inline-block' }}
+			>
 				<input
 					type="hidden"
 					name="city"
