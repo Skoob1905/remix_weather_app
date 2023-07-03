@@ -3,6 +3,7 @@ import { json } from '@remix-run/node'
 import type { ActionArgs, ActionFunction } from '@remix-run/node'
 import InputBox from 'components/InputBox'
 import { createUserSession } from 'session'
+import Button from 'components/Button'
 import 'styles/login.css'
 
 export const action: ActionFunction = async ({ request }: ActionArgs) => {
@@ -25,18 +26,24 @@ export default function login() {
 		<div className="login">
 			<Form method="post">
 				<InputBox
+					className="input"
 					title="Username"
 					placeholder="username"
 					name="username"
 				/>
 				<InputBox
+					className="input"
 					title="Password"
 					placeholder="password"
 					name="password"
 					type="password"
 				/>
 				{actionData?.status ? <p>Invalid Username or Password</p> : null}
-				<button type="submit">Log in</button>
+				<Button
+					label="Log in"
+					type="submit"
+					className="button"
+				/>
 			</Form>
 		</div>
 	)

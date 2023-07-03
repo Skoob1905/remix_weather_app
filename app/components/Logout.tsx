@@ -1,4 +1,5 @@
 import { Form } from '@remix-run/react'
+import Button from './Button'
 
 const Logout = () => {
 	return (
@@ -6,12 +7,11 @@ const Logout = () => {
 			action="/logout"
 			method="post"
 		>
-			<button
+			<Button
+				label="Logout"
 				type="submit"
 				className="button"
-			>
-				<b>Logout</b>
-			</button>
+			/>
 		</Form>
 	)
 }

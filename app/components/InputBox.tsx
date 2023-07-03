@@ -1,6 +1,7 @@
 import React from 'react'
 
 type TInputBox = {
+	className: string
 	title: string
 	placeholder: string
 	name: string
@@ -10,7 +11,7 @@ type TInputBox = {
 const InputBox = ({ title, ...restProps }: TInputBox) => {
 	return (
 		<div>
-			{title}
+			<b>{title}</b>
 			<input {...restProps} />
 		</div>
 	)
