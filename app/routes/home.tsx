@@ -22,19 +22,18 @@ type WeatherResponse = {
 
 export const action = async ({ request }: ActionArgs) => {
 	const formData = await request.formData()
-	const cityToBeAdded = formData.get('city')
-	const data = { name: cityToBeAdded }
-	console.log(formData.get('action'))
-	switch (formData.get('action')) {
-		case 'post': {
-			console.log('im being created')
-			await prisma.faveCity.create({ data })
-		}
-		case 'delete': {
-			console.log('im being deleted')
-			await prisma.faveCity.delete({ where: { city: data } })
-		}
+	const city = formData.get('city')
+	if (city === '') return redirect('/home')
+	const data = { name: city }
+	console.log(formData.get('action'), data)
+	if (formData.get('action') === 'post') {
+		console.log('im being created')
+		await prisma.faveCity.create({ data })
+	} else {
+		console.log('im being deleted')
+		await prisma.faveCity.deleteMany({ where: { name: city } })
 	}
+
 	return redirect('/home')
 }
 

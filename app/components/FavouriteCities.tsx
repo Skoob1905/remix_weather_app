@@ -19,6 +19,7 @@ const AddNewCityInput = ({ setIsAddingNewCity }) => {
 			<button
 				type="submit"
 				className="button"
+				name="action"
 				value="post"
 				onClick={onSubmit}
 			>
@@ -33,9 +34,15 @@ const CityItem = ({ name }: { name: string }) => (
 		<h4 className="cityLabel">
 			{name}
 			<Form method="delete">
+				<input
+					type="hidden"
+					name="city"
+					value={name}
+				/>
 				<IconButton
 					sx={{ marginLeft: '.5rem' }}
 					type="submit"
+					name="action"
 					value="delete"
 				>
 					<CloseIcon fontSize="small" />
