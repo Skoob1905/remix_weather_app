@@ -1,12 +1,4 @@
-import React from 'react'
-
-type TInputBox = {
-	className: string
-	title: string
-	placeholder: string
-	name: string
-	type?: string
-}
+import { TInputBox } from 'remix.env'
 
 const InputBox = ({ title, ...restProps }: TInputBox) => {
 	return (

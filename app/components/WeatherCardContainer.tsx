@@ -1,37 +1,48 @@
 import { getIconString } from 'utils/getIcon'
-import { WeatherResponse } from 'routes/home'
-import 'styles/home.css'
+import { WeatherData } from 'remix.env'
 
-type TWeatherCardContainer = {
-	weatherData: WeatherResponse[]
-}
-
-const WeatherCardContainer = ({ weatherData }: TWeatherCardContainer) => {
+const WeatherCardContainer = ({
+	weatherData,
+}: {
+	weatherData: WeatherData[]
+}) => {
 	return (
 		<div className="weatherCardContainer">
-			{weatherData.map((city: WeatherResponse, idx: number) => (
-				<div
-					key={idx}
-					className="weatherCard"
-				>
-					<h4>{city.location.name}</h4>
-					<img
-						src={getIconString(city.current.condition.code)}
-						alt="weatherLogo"
-						style={{ display: 'inline-block' }}
-					/>
-					<b style={{ display: 'block' }}>{city.current.condition.text}</b>
-					<p>
-						Temp. (ºC): <b>{city.current.temp_c}</b>
-					</p>
-					<p>
-						Humidity (%): <b>{city.current.humidity}</b>
-					</p>
-					<p>
-						Rain (mm): <b>{city.current.precip_mm}</b>
-					</p>
-				</div>
-			))}
+			{weatherData.map((city: WeatherData, idx: number) => {
+				const {
+					location: { name },
+					current: {
+						condition: { text, code },
+						temp_c,
+						humidity,
+						precip_mm,
+					},
+				} = city
+
+				return (
+					<div
+						key={idx}
+						className="weatherCard"
+					>
+						<h4>{name}</h4>
+						<img
+							src={getIconString(code)}
+							alt="weatherLogo"
+							style={{ display: 'inline-block' }}
+						/>
+						<b style={{ display: 'block' }}>{text}</b>
+						<p>
+							Temp. (ºC): <b>{temp_c}</b>
+						</p>
+						<p>
+							Humidity (%): <b>{humidity}</b>
+						</p>
+						<p>
+							Rain (mm): <b>{precip_mm}</b>
+						</p>
+					</div>
+				)
+			})}
 		</div>
 	)
 }

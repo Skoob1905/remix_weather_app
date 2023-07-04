@@ -1,53 +1,55 @@
-# Welcome to Remix!
+# Remix Weather App
 
-- [Remix Docs](https://remix.run/docs)
+Find the weather in any city using this Full stack app! Add your favourite cities and see what the weather is like. For each city, you will be able to view:
 
-## Development
+- Description (text and a logo) of the weather
+- Rainfall in mm
+- Humidity in %
+- Temperate in ºC
 
-From your terminal:
+## App Setup
 
-```sh
+Feel free to clone this repo using
+
+```
+git clone https://github.com/Skoob1905/remix_weather_app
+cd remix_weather_app
+```
+
+### npm
+
+If you have npm installed run these
+
+```
+npm i
 npm run dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+### yarn
 
-## Deployment
+if you have yarn installed then run
 
-First, build your app for production:
-
-```sh
-npm run build
+```
+yarn
+yarn dev
 ```
 
-Then run the app in production mode:
+---
 
-```sh
-npm start
-```
+## Authentication/Route Protection
 
-Now you'll need to pick a host to deploy it to.
+This app uses session cookies to log the user in and out. When the log in button or the log out button is pressed. Meaning that you can revisit the browser and still be logged in.
 
-### DIY
+If the user is not logged in, they cannot navigate past the login page until they have signed in.
 
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
+---
 
-Make sure to deploy the output of `remix build`
+## Database
 
-- `build/`
-- `public/build/`
+As a full stack application, there is a local sqlite is being queries using the Prisma ORM, this application uses one table call **FaveCity**.
 
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
-```
+| Table    | Operation | Description                                              |
+| -------- | --------- | -------------------------------------------------------- |
+| FaveCity | Create    | New cities will be added to this table                   |
+| FaveCity | Delete    | User can delete cities from the table                    |
+| FaveCity | Read      | Cities inside the db will be read and sent to the screen |

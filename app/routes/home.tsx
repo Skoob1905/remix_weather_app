@@ -5,29 +5,38 @@ import { LoaderArgs, json, ActionArgs } from '@remix-run/node'
 import { getUserId } from 'session'
 import { redirect } from '@remix-run/node'
 import Logout from 'components/Logout'
-import { prisma } from 'db.server'
+import { prisma } from '../../prisma/prismaClient'
 import WeatherCardContainer from 'components/WeatherCardContainer'
-import 'styles/home.css'
+import { WeatherData } from 'remix.env'
+import 'global.css'
 
-export type WeatherResponse = {
-	current: {
-		condition: { text: string; code: number }
-		temp_c: number
-		humidity: number
-		precip_mm: number
-	}
-	location: { name: string }
+export function ErrorBoundary({ error }) {
+	return (
+		<div>
+			<h1>my custom Error</h1>
+			<p>{error.message}</p>
+			<p>The stack trace is:</p>
+			<pre>{error.stack}</pre>
+		</div>
+	)
 }
 
 export const action = async ({ request }: ActionArgs) => {
 	const formData = await request.formData()
-	const city = formData.get('city')
+	const city = formData.get('city') as string
+
+	// If the city already exists in the db, return error
 	if (await prisma.faveCity.findFirst({ where: { name: city } }))
 		return json({ status: 400 })
-	if (city === '') return redirect('/home')
-	formData.get('action') === 'post'
-		? await prisma.faveCity.create({ data: { name: city } })
-		: await prisma.faveCity.delete({ where: { cityId: city } })
+
+	// if city is non-blank, lets either delete or create it
+	if (city !== '') {
+		formData.get('action') === 'post'
+			? await prisma.faveCity.create({ data: { name: city } })
+			: await prisma.faveCity.delete({ where: { cityId: city } })
+	}
+
+	//revalidate the home page with updated data
 	return redirect('/home')
 }
 
@@ -37,13 +46,17 @@ export const loader = async ({ request }: LoaderArgs) => {
 	if (!userId) return redirect('/login')
 
 	// Now they are logged in, we can load the page data
-	const cities = await prisma.faveCity.findMany()
-	const weatherData: WeatherResponse[] = await Promise.all(
-		cities.map(
-			async (city) => await getApiResponse<string, WeatherResponse>(city.name)
-		)
+	const cities = await prisma.faveCity.findMany({
+		select: {
+			name: true,
+			cityId: true,
+		},
+	})
+	const weatherData: WeatherData[] = await Promise.all(
+		cities.map(async (city) => await getApiResponse(city.name))
 	)
 
+	// send back the userID, cities retrieved and weatherData to main component
 	return json({ userId, cities, weatherData })
 }
 

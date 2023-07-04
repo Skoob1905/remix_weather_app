@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Button = ({ label, ...buttonProps }) => {
 	return (
 		<button {...buttonProps}>

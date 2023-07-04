@@ -15,3 +15,16 @@ export type WeatherData = {
 		precip_mm: number
 	}
 }
+
+export type DBResponse = {
+	name: string
+	cityId: string
+}
+
+export type TInputBox = {
+	className: string
+	title: string
+	placeholder: string
+	name: string
+	type?: string
+}

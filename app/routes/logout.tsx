@@ -3,7 +3,7 @@ import { redirect } from '@remix-run/node'
 import { logout } from 'session'
 
 // This page will handle the 'logging out', so anyone redirected to can be logged out by
-// redirecting back to login and then deleting the cookie in storage
+// redirecting back to login and then cookie is deleted from storage
 
 export async function action({ request }: ActionArgs) {
 	return logout(request)

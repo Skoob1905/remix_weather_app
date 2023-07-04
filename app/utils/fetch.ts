@@ -1,12 +1,11 @@
 import axios, { AxiosResponse } from 'axios'
+import { WeatherData } from 'remix.env'
 
 const generateErrorMessage = (response: AxiosResponse<any, any>) => {
 	return JSON.stringify(response)
 }
 
-const getApiResponse = async <TData, TResponse>(
-	city: TData
-): Promise<TResponse> => {
+const getApiResponse = async (city: string): Promise<WeatherData> => {
 	const config = {
 		method: 'GET',
 		url: 'http://api.weatherapi.com/v1/current.json',

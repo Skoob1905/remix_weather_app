@@ -2,13 +2,11 @@ import { Form, useActionData } from '@remix-run/react'
 import { IconButton } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import Button from './Button'
+import { DBResponse } from 'remix.env'
 
-type TAddNewCityInput = {
-	isDisabled: boolean
-}
-
-const AddNewCityInput = ({ isDisabled }: TAddNewCityInput) => {
+const AddNewCityInput = ({ isDisabled }: { isDisabled: boolean }) => {
 	const actionData = useActionData()
+	actionData && document.getElementById('city')?.value === ''
 	return (
 		<Form
 			method="post"
@@ -33,7 +31,7 @@ const AddNewCityInput = ({ isDisabled }: TAddNewCityInput) => {
 	)
 }
 
-const CityItem = ({ name, cityId }: { name: string; cityId: string }) => {
+const CityItem = ({ name, cityId }: DBResponse) => {
 	return (
 		<h4 className="cityLabel">
 			{name}
@@ -59,11 +57,7 @@ const CityItem = ({ name, cityId }: { name: string; cityId: string }) => {
 	)
 }
 
-const FavouriteCities = ({
-	cities,
-}: {
-	cities: Array<{ name: string; cityId: string }>
-}) => {
+const FavouriteCities = ({ cities }: { cities: DBResponse[] }) => {
 	return (
 		<div className="faveCityContainer">
 			<h2 className="title">Favourite Cities</h2>
@@ -74,8 +68,8 @@ const FavouriteCities = ({
 				) : (
 					cities.map((city) => (
 						<CityItem
-							{...city}
 							key={city.cityId}
+							{...city}
 						/>
 					))
 				)}
