@@ -10,17 +10,6 @@ import WeatherCardContainer from 'components/WeatherCardContainer'
 import { WeatherData } from 'remix.env'
 import 'global.css'
 
-export function ErrorBoundary({ error }) {
-	return (
-		<div>
-			<h1>my custom Error</h1>
-			<p>{error.message}</p>
-			<p>The stack trace is:</p>
-			<pre>{error.stack}</pre>
-		</div>
-	)
-}
-
 export const action = async ({ request }: ActionArgs) => {
 	const formData = await request.formData()
 	const city = formData.get('city') as string
