@@ -6,7 +6,6 @@ import { DBResponse } from 'remix.env'
 
 const AddNewCityInput = ({ isDisabled }: { isDisabled: boolean }) => {
 	const actionData = useActionData()
-	actionData && document.getElementById('city')?.value === ''
 	return (
 		<Form
 			method="post"

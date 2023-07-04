@@ -28,3 +28,12 @@ export type TInputBox = {
 	name: string
 	type?: string
 }
+
+export type TButton = {
+	label: string
+	type: string
+	className: string
+	name?: string
+	value?: string
+	disabled?: boolean
+}
